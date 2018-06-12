@@ -12,67 +12,8 @@
             <script src="jquery-ui/jquery-ui.js"></script>
             <link rel="stylesheet" href="jquery-ui/jquery-ui.css">
 
-        <style type="text/css">
-            body {
-                font-family: sans-serif;
-                padding:0;
-                margin:0;
-            }
-            #barra {
-                width:100%;
-                background-color:#EEE; /* se repite en hezadecimal en el bit */
-                padding:5px;
-                height:30px;
-            }
-            #logo {
-                float:left;
-                font-weight:bold;
-                font-size:120%;
-                padding: 3px 5px;
-            }
-            #contenedorBotones {
-                width:233px;
-                margin:0 auto;
-            }
-            .boton {
-                float:left;
-                border: 1px solid grey;
-                padding: 6px;
-                border-right: none;
-                font-size:90%;
-            }
-            #html {
-                border-top-left-radius: 4px;
-                border-bottom-left-radius: 4px;
-            }
-            #output {
-                border-top-right-radius: 4px;
-                border-bottom-right-radius: 4px;
-                border-right:1px solid grey;
-            }
-            .activo { 
-                background-color:#D4F2FF; /* celeste */
-            }
-            .botonMarcado { 
-                background-color: grey;
-            }
-            textarea {
-                resize: none;
-                border-top:none;
-                border-color:grey;
-            }
-            .panel {
-                float:left;
-                width: 50%;
-                border-left:none;
-            }
-            iframe {
-                border:none;
-            }
-            .oculto {
-                display: none;
-            }
-        </style>
+        <!-- CSS -->
+        <link rel="stylesheet" href="css/style.css">
     </head>
     
     <body>
@@ -93,46 +34,8 @@
 
             <iframe id="outputPanel" class="panel"></iframe>
         </div>
-        <script type="text/javascript">
-            function actualizarSalida(){
-                $("iframe").contents().find("html").html("<html><head><style type='text/css'>"+$("#cssPanel").val()+"</style></head><body>"+$("#htmlPanel").val()+"</body></html>");
-                // Lo siguiente ejecuta el javascript en la página original no en el iframe
-                //eval($("#javascriptPanel").val());
-                document.getElementById("outputPanel").contentWindow.eval($("#javascriptPanel").val()); //esto si
-            }
 
-            /*  La funcion hover puede manejar
-                la entrada y salida del puntero a través
-                de dos funciones */
-            $(".boton").hover(function(){                   // Cuando el puntero se posiciona sobre los botones
-                $(this).addClass("botonMarcado");           // Cambia a un color
-            },function(){
-                $(this).removeClass("botonMarcado");        // AL salir el puntero, se cambia al color por defecto
-            });
-            
-            // Con toggleClass alternamos una clase
-            $(".boton").click(function(){
-                $(this).toggleClass("activo");              // Alterna una clase
-                $(this).removeClass("botonMarcado");
-                
+        <script src="scripts/script.js"></script>
 
-                var panelId = $(this).attr("id") + "Panel";
-                $("#"+panelId).toggleClass("oculto");
-
-                
-                var numeroDePanelesActivos=4 - $('.oculto').length;
-                $(".panel").width(($(window).width()/numeroDePanelesActivos)-10);
-            });
-            //
-            $(".panel").height($(window).height() -$("#barra").height()-15);
-            $(".panel").width($(window).width()/2 -10);
-            actualizarSalida();
-            
-            $("textarea").on('change keyup paste',function(){
-                actualizarSalida();
-            }); 
-            
-            
-        </script>
     </body>
 </html>
